@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>JA Korea</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    -->
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <!--footer -->
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sticky-footer/">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.0/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
+    <link href="sticky-footer-navbar.css" th:href="@{/css/sticky-footer-navbar.css}" rel="stylesheet">
+
+    <style type="text/css">
+      .carousel-item {
+  height: 65vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.carousel-inner{
+    font-family: 'NanumSquare', sans-serif !important;
+    }
+    .container{
+        font-family: 'NanumSquare', sans-serif !important;
+}
+
+    /* EOS */
+  </style>
+
+    <script id="insert"></script>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" th:replace="fragments/common :: menu('home')">
+    <a class="navbar-brand" href="#">JA Korea</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" th:classappend="${menu} == 'home'? 'active'">
+                <a class="nav-link" href="#" th:href="@{/}">Home <span class="sr-only" th:if="${menu} == 'home'">(current)</span></a>
+            </li>
+
+            <li class="nav-item" th:classappend="${menu} == 'vehicle'? 'active'">
+                <a class="nav-link" href="#" th:href="@{/vehicle/vehicle_list}">차량관리<span class="sr-only" th:if="${menu} == 'vehicle'">(current)</span></a>
+            </li>
+            <li class="nav-item" th:classappend="${menu} == 'meeting'? 'active'">
+                <a class="nav-link" href="#" th:href="@{/meeting/meeting_list}">회의실 예약<span class="sr-only" th:if="${menu} == 'meeting'">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">교재재고 관리</a>
+            </li>
+            <li class="nav-item" th:classappend="${menu} == 'payment'? 'active'">
+                <a class="nav-link" href="#" th:href="@{/payment/payment_list}">선수금<span class="sr-only" th:if="${menu} == 'payment'">(current)</span></a>
+            </li>
+            <li class="nav-item" th:classappend="${menu} == 'education'?'active'">
+                <a class="nav-link" href="#" th:href="@{/education/education}">교육실적 관리<span class="sr-only" th:if="${menu} == 'education'">(current)</span></a>
+            </li>
+            <li class="nav-item" th:classappend="${menu} == 'admin'?'active'">
+                <a class="nav-link" href="#" th:href="@{/account/admin}">관리자 페이지<span class="sr-only" th:if="${menu} == 'admin'">(current)</span></a>
+            </li>
+        </ul>
+
+        <a class="btn btn-outline-success mr-2" th:href="@{/account/login}"
+           sec:authorize="!isAuthenticated()">Login</a>
+        <a class="btn btn-outline-success" th:href="@{/account/register}"
+           sec:authorize="!isAuthenticated()">Sign up</a>
+
+        <form class="form-inline mt-2 mt-md-0" th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
+            <span class="text-primary" sec:authentication="name">사용자</span> <span class="text-white"> 님 </span>
+            <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>
+            <button type="submit" class="btn btn-outline-light" >Logout</button>
+        </form>
+    </div>
+</nav>
+</nav>
+
+<header>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('https://source.unsplash.com/tvc5imO5pXk/1920x1080')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3 class="display-4">Mission</h3>
+                    <p class="lead">청소년들이 자신의 미래를 스스로 개척할 수 있는 역량을 키워, 성공적인 삶을 살 수 있도록 돕는다.</p>
+                </div>
+            </div>
+
+            <!-- Slide Two - Set the background image for this slide in the line below -->
+            <div class="carousel-item" style="background-image: url('https://source.unsplash.com/f0rdHx5P8sQ/1920x1080')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3 class="display-4">Purpose</h3>
+                    <p class="lead">시장 경제에 대한 올바른 인식, 금융 지식에 대한 기본적 이해, 기업 경영과 직업 및 진로 교육, 건전한 기업 윤리 의식 고취를 통해 리더십과 국제경쟁력을 갖춘 청소년 양성</p>
+                </div>
+            </div>
+
+            <!-- Slide Three - Set the background image for this slide in the line below -->
+            <div class="carousel-item" style="background-image: url('https://source.unsplash.com/s9CC2SKySJM/1920x1080')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3 class="display-4">Value</h3>
+                    <p class="lead">청소년의 가능성, 창의성, 다양성에 대한 존중</p>
+                </div>
+            </div>
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+</header>
+
+<!-- Page Content -->
+<section class="py-5">
+    <div class="container">
+        <h1 class="font-weight-light">JA Korea</h1>
+        <br>
+        <p class="lead">사내 관리 페이지 입니다. </p>
+        <p class="lead">회의실 예약, 차량관리, 교재재고, 선수금, 교육실적을 한번에 관리 가능합니다.</p>
+    </div>
+</section>
+
+
+<script type="text/javascript">//<![CDATA[
+  //]]></script>
+
+<script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "3xr90f2y"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+</script>
+<footer class="footer" th:replace="fragments/common ::footer(home)">
+    <div class="container">
+    </div>
+</footer>
+
+
+
+</body>
+</html>
